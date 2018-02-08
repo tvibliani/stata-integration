@@ -806,8 +806,8 @@ EOF
 STATA_MIME_TYPES_A=("application/x-stata-do" "application/x-stata-dta")
 STATA_MIME_TYPES_B=("application/x-stata-gph" "application/x-stata-smcl" "application/x-stata-stpr" "application/x-stata-stsem")
 
-_set_default_app ${STATA_GUI} ${STATA_MIME_TYPES_B[*]}
-_set_default_app ${STATA_CONSOLE} ${STATA_MIME_TYPES_A[*]}
+_set_default_app ${STATA_GUI} ${STATA_MIME_TYPES_B[*]} ${STATA_MIME_TYPES_A[*]}
+#FIXME everything for GUI... _set_default_app ${STATA_CONSOLE} ${STATA_MIME_TYPES_A[*]}
 
 
 xdg-desktop-menu forceupdate
