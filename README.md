@@ -1,5 +1,5 @@
-# Stata15-integration
-A Linux script integrating menu and file associations for an already installed **Stata-MC 15** instance into the desktop environment. 
+# Stata/IC/15-integration
+A Linux script integrating menu and file associations for an already installed **Stata-IC 15** instance into the desktop environment. 
 
 The script has been tested on Debian 9 with the latest **Stata 15**. and should work in some other distros as well.
 
