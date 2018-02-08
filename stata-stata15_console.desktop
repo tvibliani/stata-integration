@@ -1,0 +1,25 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Stata-IC (console) 15
+Version=1.0
+GenericName=Stata (console)
+Comment=Start-IC 15 (console mode)
+Exec=/usr/local/stata15/stata -q
+Icon=stata-console15
+Terminal=true
+Type=Application
+MimeType=application/x-stata-dta;application/x-stata-do;
+Categories=Office;Education;Science;Application;GTK;GNOME;
+StartupNotify=true
+Actions=doedit;use;
+
+
+[Desktop Action doedit]
+Name=Open Stata with do-file editor
+Exec=/usr/local/stata15/stata -q doedit "%f"
+
+[Desktop Action use]
+Name=Open Stata and use file
+Exec=/usr/local/stata15/stata -q use "%f"
+
+

@@ -22,4 +22,11 @@ cp -uf svg/*.svg /usr/share/icons/gnome/scalable/mimetypes/
 
 gtk-update-icon-cache /usr/share/icons/gnome -f
 
+##
+# Create menu entries for GUI and Console versions of the Stata-IC 15
+##
+cp -uf stata*.desktop /usr/share/applications
+
+xdg-desktop-menu forceupdate
+
 

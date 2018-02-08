@@ -1,0 +1,40 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Stata-IC 15
+Version=1.0
+GenericName=Stata
+Comment=Start-IC 15 (GUI mode)
+Exec=/usr/local/bin/xstata -q
+Icon=stata15
+Terminal=false
+Type=Application
+MimeType=application/x-stata-dta;application/x-stata-do;application/x-stata-smcl;application/x-stata-stpr;application/x-stata-gph;application/x-stata-stsem;
+Categories=Office;Education;Science;Application;GTK;GNOME;
+StartupNotify=true
+Actions=doedit;use;view;graphuse;projmanag;semopen;
+
+
+[Desktop Action doedit]
+Name=Start Stata and open do-file editor
+Exec=/usr/local/bin/xstata -q doedit "%f"
+
+[Desktop Action use]
+Name=Start Stata and use file
+Exec=/usr/local/bin/xstata -q use "%f"
+
+[Desktop Action view]
+Name=Start Stata and open viewer
+Exec=/usr/local/bin/xstata -q view "%f"
+
+[Desktop Action graphuse]
+Name=Start Stata and open graph editor
+Exec=/usr/local/bin/xstata -q graph use "%f"
+
+[Desktop Action semopen]
+Name=Start Stata and open structural equation model builder
+Exec=/usr/local/bin/xstata -q sembuilder "%f"
+
+[Desktop Action projmanag]
+Name=Start Stata and open project manager
+Exec=/usr/local/bin/xstata -q projmanag "%f"
+
