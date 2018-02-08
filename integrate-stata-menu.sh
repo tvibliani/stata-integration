@@ -697,11 +697,84 @@ gtk-update-icon-cache /usr/share/icons/gnome -f
 ##
 # Create menu entries for GUI and Console versions of the Stata-IC 15
 ##
-STATA_GUI=stata15.desktop
-STATA_CONSOLE=stata15-console.desktop
+VERSION=15
+FLAVOR=IC
+STATA_GUI="stata${VERSION}.desktop"
+STATA_GUI_EXECUTABLE=/usr/local/bin/xstata
+STATA_CONSOLE="stata${VERSION}-console.desktop"
+STATA_CONSOLE_EXECUTABLE=/usr/local/stata15/stata
 
-cp -uf ${STATA_GUI} /usr/share/applications
-cp -uf ${STATA_CONSOLE} /usr/share/applications
+
+cat <<EOF > /usr/share/applications/${STATA_GUI}
+[Desktop Entry]
+Encoding=UTF-8
+Name=Stata-${FLAVOR} ${VERSION}
+Version=1.0
+GenericName=Stata
+Comment=Start-${FLAVOR} ${VERSION} (GUI mode)
+Exec=${STATA_GUI_EXECUTABLE} -q %F
+Icon=stata${VERSION}
+Terminal=false
+Type=Application
+MimeType=application/x-stata-dta;application/x-stata-do;application/x-stata-smcl;application/x-stata-stpr;application/x-stata-gph;application/x-stata-stsem;
+Categories=Office;Education;Science;Application;GTK;GNOME;
+StartupNotify=true
+Actions=doedit;use;view;graphuse;projmanag;semopen;
+
+
+[Desktop Action doedit]
+Name=Start Stata and open do-file editor
+Exec=${STATA_GUI_EXECUTABLE} -q doedit "%f"
+
+[Desktop Action use]
+Name=Start Stata and use file
+Exec=${STATA_GUI_EXECUTABLE} -q use "%f"
+
+[Desktop Action view]
+Name=Start Stata and open viewer
+Exec=${STATA_GUI_EXECUTABLE} -q view "%f"
+
+[Desktop Action graphuse]
+Name=Start Stata and open graph editor
+Exec=${STATA_GUI_EXECUTABLE} -q graph use "%f"
+
+[Desktop Action semopen]
+Name=Start Stata and open structural equation model builder
+Exec=${STATA_GUI_EXECUTABLE} -q sembuilder "%f"
+
+[Desktop Action projmanag]
+Name=Start Stata and open project manager
+Exec=${STATA_GUI_EXECUTABLE} -q projmanag "%f"
+
+EOF
+
+cat <<EOF > /usr/share/applications/${STATA_CONSOLE}
+[Desktop Entry]
+Encoding=UTF-8
+Name=Stata-${FLAVOR} (console) ${VERSION}
+Version=1.0
+GenericName=Stata (console)
+Comment=Start-${FLAVOR} ${VERSION} (console mode)
+Exec=${STATA_CONSOLE_EXECUTABLE} -q %F
+Icon=stata-console${VERSION}
+Terminal=true
+Type=Application
+MimeType=application/x-stata-dta;application/x-stata-do;
+Categories=Office;Education;Science;Application;GTK;GNOME;
+StartupNotify=true
+Actions=doedit;use;
+
+
+[Desktop Action doedit]
+Name=Open Stata with do-file editor
+Exec=${STATA_CONSOLE_EXECUTABLE} -q doedit "%f"
+
+[Desktop Action use]
+Name=Open Stata and use file
+Exec=${STATA_CONSOLE_EXECUTABLE} -q use "%f"
+
+EOF
+
 
 
 ##
