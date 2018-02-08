@@ -10,16 +10,20 @@ mimeapps_list_file=/usr/share/applications/mimeapps.list
 function _set_default_app {
     # Arguments: first one is .desktop file, followed by one or more mime types.
     default_app=$1
+    echo "> Seting '${default_app}' as a default application for the following mime type(s):"
+    echo "  (editing: ${mimeapps_list_file})"
     shift
     for mime in $@;do
-        grep -q "${mime}" ${mimeapps_list_file} && sed -i "s|${mime}=.*$|${mime}=${default_app}|g" ${mimeapps_list_file} || sed -i  "/\[Default Applications\]/a ${mime}=${default_app}" ${mimeapps_list_file} 
+        echo -ne "  - \"${mime}\"... \t" && 
+        grep -q "${mime}" ${mimeapps_list_file} && sed -i "s|${mime}=.*$|${mime}=${default_app}|g" ${mimeapps_list_file} || sed -i  "/\[Default Applications\]/a ${mime}=${default_app}" ${mimeapps_list_file} && echo "ok" || echo "fail"
     done
 
 }
 
 function install_stata_mimetypes {
-    destination=$1
-    cat <<EOF > $destination/stata-mimetypes.xml
+    destination="$1/stata-mimetypes.xml"
+    echo -ne "> Installing mime info at '${destination}'...\t"
+    cat <<EOF > ${destination}  && echo "ok" || echo "fail"
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
   <mime-type type="application/x-stata-do">
@@ -67,8 +71,10 @@ EOF
 
 function install_stata_icons {
 	# Generate SVG icons for Stata 15
-	destination=$1
-	cat <<EOF > ${destination}/application-x-stata-do.svg
+	destination=$1/application-x-stata-do.svg
+    echo "> Installing icon images for Stata files and menu entries:"
+    echo -ne "  - '${destination}'... \t " &&
+	cat <<EOF > ${destination}  && echo "ok" || echo "fail"
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">  <image id="image0" width="256" height="256" x="0" y="0"
@@ -123,8 +129,9 @@ MjAxOC0wMi0wNlQyMTowODo0Mi0wNzowMJNrj3EAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDIt
 MDZUMjE6MDg6NDMtMDc6MDBEQTx5AAAAAElFTkSuQmCC" />
 </svg>
 EOF
-
-cat <<EOF > ${destination}/application-x-stata-dta.svg
+    destination=$1/application-x-stata-dta.svg
+    echo -ne "  - '${destination}'...\t "
+    cat <<EOF > ${destination}  && echo "ok" || echo "fail"
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">  <image id="image0" width="256" height="256" x="0" y="0"
@@ -182,7 +189,9 @@ ZTptb2RpZnkAMjAxOC0wMi0wNlQyMToxMToyMC0wNzowMI5d22kAAAAASUVORK5CYII=" />
 </svg>
 EOF
 
-cat <<EOF > ${destination}/application-x-stata-gph.svg
+    destination=$1/application-x-stata-gph.svg
+    echo -ne "  - '${destination}'...\t "
+    cat <<EOF > ${destination}  && echo "ok" || echo "fail"
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">  <image id="image0" width="256" height="256" x="0" y="0"
@@ -240,7 +249,9 @@ MjoxNC0wNzowMB+qQ5oAAAAASUVORK5CYII=" />
 </svg>
 EOF
 
-cat <<EOF > ${destination}/application-x-stata-smcl.svg
+    destination=$1/application-x-stata-smcl.svg
+    echo -ne "  - '${destination}'...\t "
+    cat <<EOF > ${destination}  && echo "ok" || echo "fail"
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">  <image id="image0" width="256" height="256" x="0" y="0"
@@ -305,7 +316,9 @@ Om1vZGlmeQAyMDE4LTAyLTA2VDIxOjEzOjE0LTA3OjAw8GgopAAAAABJRU5ErkJggg==" />
 </svg>
 EOF
 
-cat <<EOF > ${destination}/application-x-stata-stpr.svg
+    destination=$1/application-x-stata-stpr.svg
+    echo -ne "  - '${destination}'...\t "
+    cat <<EOF > ${destination}  && echo "ok" || echo "fail" 
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">  <image id="image0" width="256" height="256" x="0" y="0"
@@ -366,7 +379,9 @@ NzowMIe2exMAAAAASUVORK5CYII=" />
 </svg>
 EOF
 
-cat <<EOF > ${destination}/application-x-stata-stsem.svg
+    destination=$1/application-x-stata-stsem.svg
+    echo -ne "  - '${destination}'...\t "
+    cat <<EOF > ${destination}  && echo "ok" || echo "fail"
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">  <image id="image0" width="256" height="256" x="0" y="0"
@@ -429,7 +444,9 @@ LTAyLTA2VDIxOjE2OjEzLTA3OjAw0+bdbgAAAABJRU5ErkJggg==" />
 </svg>
 EOF
 
-cat <<EOF > ${destination}/stata15.svg
+    destination=$1/stata15.svg
+    echo -ne "  - '${destination}'... \t "
+    cat <<EOF > ${destination}  && echo "ok" || echo "fail"
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">  <image id="image0" width="256" height="256" x="0" y="0"
@@ -514,7 +531,9 @@ RU5ErkJggg==" />
 </svg>
 EOF
 
-cat <<EOF > ${destination}/stata-console15.svg
+    destination=$1/stata-console15.svg
+    echo -ne "  - '${destination}'... \t"
+    cat <<EOF > ${destination}  && echo "ok" || echo "fail"
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="256px" height="256px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">  <image id="image0" width="256" height="256" x="0" y="0"
@@ -704,8 +723,9 @@ STATA_GUI_EXECUTABLE=/usr/local/bin/xstata
 STATA_CONSOLE="stata${VERSION}-console.desktop"
 STATA_CONSOLE_EXECUTABLE=/usr/local/stata15/stata
 
-
-cat <<EOF > /usr/share/applications/${STATA_GUI}
+echo "> Installing menu entries:"
+echo -ne "  - /usr/share/applications/${STATA_GUI}...\t"
+cat <<EOF > /usr/share/applications/${STATA_GUI} && echo "ok" || echo "fail"
 [Desktop Entry]
 Encoding=UTF-8
 Name=Stata-${FLAVOR} ${VERSION}
@@ -747,8 +767,8 @@ Name=Start Stata and open project manager
 Exec=${STATA_GUI_EXECUTABLE} -q projmanag "%f"
 
 EOF
-
-cat <<EOF > /usr/share/applications/${STATA_CONSOLE}
+echo -ne "  - /usr/share/applications/${STATA_CONSOLE}...\t"
+cat <<EOF > /usr/share/applications/${STATA_CONSOLE} && echo "ok" || echo "fail"
 [Desktop Entry]
 Encoding=UTF-8
 Name=Stata-${FLAVOR} (console) ${VERSION}
