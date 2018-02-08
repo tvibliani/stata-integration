@@ -692,7 +692,7 @@ EOF
 ####
 ####
 echo
-echo "Integrate Stata/IC 15 (menu entries and file associations)"
+echo "Integrate Stata/IC 15 (add menu entries and file associations)"
 echo
 ##
 # Install Stata deskop menu entries and add mime type associations for Stata files.
