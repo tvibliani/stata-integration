@@ -9,4 +9,8 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 
+cp -uf stata-mimetypes.xml  /usr/share/mime/packages/
+
+update-mime-database /usr/share/mime
+
 
