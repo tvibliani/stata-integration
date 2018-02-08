@@ -1,4 +1,36 @@
 #!/bin/bash
+
+mimeapps_list_file=/usr/share/applications/mimeapps.list
+
+#################################################
+# START
+# Utility Functions
+##
+
+_set_default_app () {
+    # Arguments: first one is .desktop file, followed by one or more mime types.
+    default_app=$1
+    shift
+    for mime in $@;do
+        grep -q "${mime}" ${mimeapps_list_file} && sed -i "s|${mime}=.*$|${mime}=${default_app}|g" ${mimeapps_list_file} || sed -i  "/\[Default Applications\]/a ${mime}=${default_app}" ${mimeapps_list_file} 
+    done
+
+}
+
+##
+# Utility Functions
+# END
+#################################################
+
+
+####
+####
+##
+##  Main
+##
+####
+####
+
 ##
 # Install Stata deskop menu entries and add mime type associations for Stata files.
 ##
@@ -36,13 +68,13 @@ cp -uf ${STATA_CONSOLE} /usr/share/applications
 # Set Stata (GUI version) as default application for all stata files
 ##
 
-mimeapps_list_file=/usr/share/applications/mimeapps.list
-STATA_MIME_TYPES=("application/x-stata-do" "application/x-stata-dta" "application/x-stata-gph" "application/x-stata-smcl" "application/x-stata-stpr" "application/x-stata-stsem")
-default_app=${STATA_GUI}
+STATA_MIME_TYPES_A=("application/x-stata-do" "application/x-stata-dta")
+STATA_MIME_TYPES_B=("application/x-stata-gph" "application/x-stata-smcl" "application/x-stata-stpr" "application/x-stata-stsem")
 
-for mime in ${STATA_MIME_TYPES[*]};do
-    grep -q "${mime}" ${mimeapps_list_file} && sed -i "s|${mime}=.*$|${mime}=${default_app}|g" ${mimeapps_list_file} || sed -i  "/\[Default Applications\]/a ${mime}=${default_app}" ${mimeapps_list_file} 
-done
+_set_default_app ${STATA_GUI} ${STATA_MIME_TYPES_B[*]}
+_set_default_app ${STATA_CONSOLE} ${STATA_MIME_TYPES_A[*]}
 
 
 xdg-desktop-menu forceupdate
+
+
