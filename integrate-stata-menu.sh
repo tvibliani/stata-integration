@@ -7,7 +7,7 @@ mimeapps_list_file=/usr/share/applications/mimeapps.list
 # Utility Functions
 ##
 
-_set_default_app () {
+function _set_default_app {
     # Arguments: first one is .desktop file, followed by one or more mime types.
     default_app=$1
     shift
@@ -15,6 +15,54 @@ _set_default_app () {
         grep -q "${mime}" ${mimeapps_list_file} && sed -i "s|${mime}=.*$|${mime}=${default_app}|g" ${mimeapps_list_file} || sed -i  "/\[Default Applications\]/a ${mime}=${default_app}" ${mimeapps_list_file} 
     done
 
+}
+
+function install_stata_mimetypes {
+    destination=$1
+    cat <<EOF > $destination/stata-mimetypes.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="application/x-stata-do">
+		<comment>Stata do/ado file</comment>
+		<comment xml:lang="de">Stata do/ado Datei</comment>
+		<glob pattern="*.do"/>
+		<glob pattern="*.ado"/>
+		<icon name="application-x-stata-do"/>
+  </mime-type>
+  <mime-type type="application/x-stata-dta">
+		<comment>Stata dataset file</comment>
+		<comment xml:lang="de">Stata Datensatz</comment>
+		<glob pattern="*.dta"/>
+		<icon name="application-x-stata-dta"/>
+  </mime-type>
+  <mime-type type="application/x-stata-gph">
+		<comment>Stata graph file</comment>
+		<comment xml:lang="de">Stata Grafik</comment>
+		<glob pattern="*.gph"/>
+		<icon name="application-x-stata-gph"/>
+  </mime-type>
+  <mime-type type="application/x-stata-smcl">
+		<comment>Stata SMCL file</comment>
+		<comment xml:lang="de">Stata SMCL-Datei</comment>
+		<glob pattern="*.smcl"/>
+		<glob pattern="*.sthlp"/>
+		<icon name="application-x-stata-smcl"/>
+  </mime-type>
+  <mime-type type="application/x-stata-stpr">
+		<comment>Stata project file</comment>
+		<comment xml:lang="de">Stata Projektdatei</comment>
+		<glob pattern="*.stpr"/>
+		<icon name="application-x-stata-stpr"/>
+  </mime-type>
+  <mime-type type="application/x-stata-stsem">
+		<comment>Stata SEM file</comment>
+		<comment xml:lang="de">Stata SEM-Datei</comment>
+		<glob pattern="*.stsem"/>
+		<icon name="application-x-stata-stsem"/>
+  </mime-type>
+</mime-info>
+
+EOF
 }
 
 ##
@@ -43,8 +91,7 @@ fi
 ##
 # Add Stata mime types
 ##
-cp -uf stata-mimetypes.xml  /usr/share/mime/packages/
-
+install_stata_mimetypes /usr/share/mime/packages
 update-mime-database /usr/share/mime
 
 ##
