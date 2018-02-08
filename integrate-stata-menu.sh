@@ -25,8 +25,24 @@ gtk-update-icon-cache /usr/share/icons/gnome -f
 ##
 # Create menu entries for GUI and Console versions of the Stata-IC 15
 ##
-cp -uf stata*.desktop /usr/share/applications
+STATA_GUI=stata15.desktop
+STATA_CONSOLE=stata15-console.desktop
+
+cp -uf ${STATA_GUI} /usr/share/applications
+cp -uf ${STATA_CONSOLE} /usr/share/applications
+
+
+##
+# Set Stata (GUI version) as default application for all stata files
+##
+
+mimeapps_list_file=/usr/share/applications/mimeapps.list
+STATA_MIME_TYPES=("application/x-stata-do" "application/x-stata-dta" "application/x-stata-gph" "application/x-stata-smcl" "application/x-stata-stpr" "application/x-stata-stsem")
+default_app=${STATA_GUI}
+
+for mime in ${STATA_MIME_TYPES[*]};do
+    grep -q "${mime}" ${mimeapps_list_file} && sed -i "s|${mime}=.*$|${mime}=${default_app}|g" ${mimeapps_list_file} || sed -i  "/\[Default Applications\]/a ${mime}=${default_app}" ${mimeapps_list_file} 
+done
+
 
 xdg-desktop-menu forceupdate
-
-
