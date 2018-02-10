@@ -723,7 +723,7 @@ FLAVOR=IC
 STATA_GUI="stata${VERSION}.desktop"
 STATA_GUI_EXECUTABLE=/usr/local/bin/xstata
 STATA_CONSOLE="stata${VERSION}-console.desktop"
-STATA_CONSOLE_EXECUTABLE=/usr/local/stata15/stata
+STATA_CONSOLE_EXECUTABLE=/usr/local/stata${VERSION}/stata  #TODO check existance of all required files in advance...
 
 echo "> Installing menu entries:"
 echo -ne "  - /usr/share/applications/${STATA_GUI}...\t"
